@@ -23,5 +23,4 @@ class SingleDynamicBeanProcessor implements BeanFactoryPostProcessor {
 
 		beanDefinitionRegistry.registerBeanDefinition("dynamicBean", dynamicBean);
 	}
-
 }

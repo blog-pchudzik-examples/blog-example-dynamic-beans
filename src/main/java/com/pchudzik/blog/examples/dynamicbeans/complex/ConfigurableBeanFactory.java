@@ -7,17 +7,16 @@ import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
-import org.springframework.core.io.Resource;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 import static java.util.Arrays.asList;
 
-@RequiredArgsConstructor
+@Component
 class ConfigurableBeanFactory implements BeanFactoryPostProcessor, InitializingBean {
-	private final Resource propertiesLocation;
-
 	private List<String> beanInstances;
 
 	@Override
@@ -34,7 +33,7 @@ class ConfigurableBeanFactory implements BeanFactoryPostProcessor, InitializingB
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		this.beanInstances = asList(PropertiesLoaderUtils
-				.loadProperties(propertiesLocation)
+				.loadProperties(new ClassPathResource("/application.properties"))
 				.getProperty("dynamic-beans.instances", "")
 				.split(","));
 	}
